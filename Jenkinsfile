@@ -1,10 +1,11 @@
 pipeline {
     agent { dockerfile true }
-    stages {
+/*    stages {
         stage('Test') {
             steps {
                 sh 'Image is running'
             }
         }
     }
+*/
 }
