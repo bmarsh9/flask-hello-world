@@ -19,15 +19,24 @@ pipeline {
             prismaCloudScanImage ca: '',
             cert: '',
             dockerAddress: 'unix:///var/run/docker.sock',
-            //image: customImage,
             image: "${group}_${service}",
             key: '',
-            logLevel: 'info',
+            logLevel: 'debug',
             podmanPath: '',
             project: '',
             resultsFile: 'prisma-cloud-scan-results.json',
             ignoreImageBuildTime:true
         }
     }
+    stage('Parse') {
+      steps {
+        sh '/usr/bin/python3 /home/bmarsh/test.py prisma-cloud-scan-results.json'
+      }
+    }
   }
+//  post {
+//      always {
+//          prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+//      }
+//  }
 }
