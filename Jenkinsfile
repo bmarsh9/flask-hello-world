@@ -1,11 +1,16 @@
+def group = "secops"
+def service = "hello-flask"
+
 pipeline {
-    agent { dockerfile true }
-/*    stages {
-        stage('Test') {
-            steps {
-                sh 'Image is running'
-            }
-        }
+  //checkout scm
+  //agent { dockerfile true }
+  agent any
+  stages {
+    stage("Build Image") {
+      steps {
+        def customImage = docker.build("${group}_${service}") {
+
+      }
     }
-*/
+  }
 }
