@@ -13,5 +13,20 @@ pipeline {
         }
       }
     }
+    stage('Scan') {
+        steps {
+            // Scan the image
+            prismaCloudScanImage ca: '',
+            cert: '',
+            dockerAddress: 'unix:///var/run/docker.sock',
+            image: customImage,
+            key: '',
+            logLevel: 'info',
+            podmanPath: '',
+            project: '',
+            resultsFile: 'prisma-cloud-scan-results.json',
+            ignoreImageBuildTime:true
+        }
+    }
   }
 }
