@@ -8,8 +8,7 @@ pipeline {
   stages {
     stage("Build Image") {
       steps {
-        def customImage = docker.build("${group}_${service}") {
-
+        def customImage = docker.build("${group}_${service}")
       }
     }
   }
