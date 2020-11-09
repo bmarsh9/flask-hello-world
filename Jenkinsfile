@@ -8,7 +8,9 @@ pipeline {
   stages {
     stage("Build Image") {
       steps {
-        def customImage = docker.build("${group}_${service}")
+        script {
+          def customImage = docker.build("${group}_${service}")
+        }
       }
     }
   }
