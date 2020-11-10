@@ -30,9 +30,22 @@ pipeline {
     }
     stage('Parse') {
       steps {
-        sh '/usr/bin/python3 /home/bmarsh/test.py prisma-cloud-scan-results.json'
+        sh '/usr/bin/python3 /home/bmarsh/test.py prisma-cloud-scan-results.json '+pwd()
       }
     }
+    stage('Parse') {
+      steps {
+        publishHTML([
+          allowMissing: false,
+          alwaysLinkToLastBuild: false,
+          keepAll: false,
+          reportDir: 'reports',
+          reportFiles: 'standard.html',
+          reportName: 'Twistlock Report',
+        ])
+      }
+    }
+
   }
 //  post {
 //      always {
