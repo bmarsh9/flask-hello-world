@@ -33,7 +33,7 @@ pipeline {
         sh '/usr/bin/python3 /home/bmarsh/test.py prisma-cloud-scan-results.json '+pwd()
       }
     }
-    stage('Parse') {
+    stage('HTML') {
       steps {
         publishHTML([
           allowMissing: false,
