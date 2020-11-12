@@ -30,7 +30,7 @@ pipeline {
     }
     stage('Generate Report') {
       steps {
-        sh '/usr/bin/python3 /home/bmarsh/test.py --file prisma-cloud-scan-results.json --template /home/bmarsh/reports/templates/standard.html --output '+pwd()
+        sh '/usr/bin/python3 /home/bmarsh/test.py --file prisma-cloud-scan-results.json --template /home/bmarsh/reports/templates/standard.html --output '+pwd()+'/reports'
       }
       post {
         success {
