@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Twistlock Report</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/starter-template/">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <style>
+        body {
+          padding-top: 5rem;
+        }
+        .starter-template {
+          padding: 1.5rem 1.5rem;
+          text-align: center;
+        }
+        #myBtn {
+          display: none;
+          position: fixed;
+          bottom: 20px;
+          right: 30px;
+          z-index: 99;
+          font-size: 18px;
+          border: none;
+          outline: none;
+          background-color: #007459;
+          color: white;
+          cursor: pointer;
+          padding: 15px;
+          border-radius: 4px;
+        }
+
+        #myBtn:hover {
+          background-color: #555;
+        }
+    </style>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Mission Lane</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <!--
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          -->
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="container">
+      <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+      <div class="row starter-template">
+        <div class="col-lg-9">
+          <div class="d-flex align-items-center">
+            <h4 class="mb-0"></a>  Twistlock Report</h4>
+            <span style="margin-left:10px" class="badge badge-secondary">Job: {{data["data"]["meta"]["jobName"]}}</span>
+            {% if data["data"]["meta"]["pass"] %}
+                <span style="margin-left:10px" class="badge badge-success">PASS</span>
+            {% else %}
+                <span style="margin-left:10px" class="badge badge-danger">FAIL</span>
+            {% endif %}
+            <span style="margin-left:10px" class="badge badge-secondary">Build: {{data["data"]["meta"]["build"]}}</span>
+            <span style="margin-left:10px" class="badge badge-secondary">{{data["data"]["meta"]["time"]}}</span>
+
+          </div>
+        </div>
+        <div style="text-align:right" class="col-lg-3">
+          <a href="#first"><i style="color:#dc3545;margin-right:20px" data-feather="x-octagon"></i></a>
+          <a href="#second"><i style="color:#f99209;margin-right:20px" data-feather="alert-triangle"></i></a>
+          <a href="#third"><i style="color:#f1d620;margin-right:20px" data-feather="alert-circle"></i></a>
+          <a href="#fourth"><i style="color:#007bff;margin-right:20px" data-feather="clipboard"></i></a>
+        </div>
+      </div>
+      <div class="row mb-5">
+          <div class="col-lg-3">
+            <div class="card">
+              <div class="card-header bg-light"></div>
+              <div class="card-body pt-5">
+                <h5 class="text-dark text-center"><div style="color:#dc3545" class="icon-stack icon-stack-md bg-green-soft text-green flex-shrink-0 mr-2">
+                  <i data-feather="x-octagon"></i></div>Critical</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["critical"]|length}}</h1></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card">
+              <div class="card-header bg-light"></div>
+              <div class="card-body pt-5">
+                <h5 class="text-dark text-center"><div style="color:#f99209" class="icon-stack icon-stack-md bg-green-soft text-green flex-shrink-0 mr-2">
+                  <i data-feather="alert-triangle"></i></div>High</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["high"]|length}}</h1></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card">
+              <div class="card-header bg-light"></div>
+              <div class="card-body pt-5">
+                <h5 class="text-dark text-center"><div style="color:#f1d620" class="icon-stack icon-stack-md bg-green-soft text-green flex-shrink-0 mr-2">
+                  <i data-feather="alert-circle"></i></div>Medium</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["medium"]|length}}</h1></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card">
+              <div class="card-header bg-light"></div>
+              <div class="card-body pt-5">
+                <h5 class="text-dark text-center"><div style="color:#007bff" class="icon-stack icon-stack-md bg-blue-soft text-blue flex-shrink-0 mr-2">
+                  <i data-feather="clipboard"></i></div>Informational</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["low"]|length}}</h1></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <hr id="first" style="margin-bottom:4rem !important" class="mb-4">
+      <div class="row mt-4 mb-5">
+        <div class="col-lg-12">
+          <div class="card">
+            <div style="overflow:auto" class="card-body">
+              <h4 class="card-title mb-2" style="font-weight:700">Critical<span style="margin-left:10px;color:white;background-color:#dc3545" class="badge badge-pill">{{data["data"]["critical"]|length}}</span></h4>
+              <p>The violations listed below are considered critical to high risk but may change depending on the deployment. You should address these first.</p>
+
+              <table class="table">
+                <thead class="thead-white">
+                  <tr style="text-transform: capitalize">
+                    <th scope="col">#</th>
+                    <th scope="col">id</th>
+                    <th scope="col">severity</th>
+                    <th scope="col">cvss</th>
+                    <th scope="col">packageName</th>
+                    <th scope="col">cve</th>
+                    <th scope="col">riskFactors</th>
+                    <th scope="col">type</th>
+                    <th scope="col">binaryPkgs</th>
+                    <th scope="col">layerTime</th>
+                    <th scope="col">exploit</th>
+                    <th scope="col">description</th>
+                    <th scope="col">link</th>
+                    <th scope="col">title</th>
+                    <th scope="col">applicableRules</th>
+                    <th scope="col">packageVersion</th>
+                    <th scope="col">discovered</th>
+                    <th scope="col">twistlock</th>
+                    <th scope="col">cause</th>
+                    <th scope="col">templates</th>
+                    <th scope="col">vecStr</th>
+                    <th scope="col">status</th>
+                    <th scope="col">published</th>
+                    <th scope="col">text</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for finding in data["data"]["critical"] %}
+                    <tr>
+                      <th scope="row">{{loop.index}}</th>
+                      <td>{{finding["id"]}}</td>
+                      <td>{{finding["severity"]}}</td>
+                      <td>{{finding["cvss"]}}</td>
+                      <td>{{finding["packageName"]}}</td>
+                      <td>{{finding["cve"]}}</td>
+                      <td>{{finding["riskFactors"]}}</td>
+                      <td>{{finding["type"]}}</td>
+                      <td>{{finding["binaryPkgs"]}}</td>
+                      <td>{{finding["layerTime"]}}</td>
+                      <td>{{finding["exploit"]}}</td>
+                      <td>{{finding["description"]}}</td>
+                      <td>{{finding["link"]}}</td>
+                      <td>{{finding["title"]}}</td>
+                      <td>{{finding["applicableRules"]}}</td>
+                      <td>{{finding["packageVersion"]}}</td>
+                      <td>{{finding["discovered"]}}</td>
+                      <td>{{finding["twistlock"]}}</td>
+                      <td>{{finding["cause"]}}</td>
+                      <td>{{finding["templates"]}}</td>
+                      <td>{{finding["vecStr"]}}</td>
+                      <td>{{finding["status"]}}</td>
+                      <td>{{finding["published"]}}</td>
+                      <td>{{finding["text"]}}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr id="second" style="margin-bottom:4rem !important" class="mb-4">
+      <div class="row mt-4 mb-5">
+        <div class="col-lg-12">
+          <div class="card">
+            <div style="overflow:auto" class="card-body">
+              <h4 class="card-title mb-2" style="font-weight:700">High<span style="margin-left:10px;color:white;background-color:#f99209" class="badge badge-pill">{{data["data"]["high"]|length}}</span></h4>
+              <p>The violations listed below are considered high risk but may change depending on the deployment. You should prioritize these after critical.</p>
+              <table class="table">
+                <thead class="thead-white">
+                  <tr style="text-transform: capitalize">
+                    <th scope="col">#</th>
+                    <th scope="col">id</th>
+                    <th scope="col">severity</th>
+                    <th scope="col">cvss</th>
+                    <th scope="col">packageName</th>
+                    <th scope="col">cve</th>
+                    <th scope="col">riskFactors</th>
+                    <th scope="col">type</th>
+                    <th scope="col">binaryPkgs</th>
+                    <th scope="col">layerTime</th>
+                    <th scope="col">exploit</th>
+                    <th scope="col">description</th>
+                    <th scope="col">link</th>
+                    <th scope="col">title</th>
+                    <th scope="col">applicableRules</th>
+                    <th scope="col">packageVersion</th>
+                    <th scope="col">discovered</th>
+                    <th scope="col">twistlock</th>
+                    <th scope="col">cause</th>
+                    <th scope="col">templates</th>
+                    <th scope="col">vecStr</th>
+                    <th scope="col">status</th>
+                    <th scope="col">published</th>
+                    <th scope="col">text</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for finding in data["data"]["high"] %}
+                    <tr>
+                      <th scope="row">{{loop.index}}</th>
+                      <td>{{finding["id"]}}</td>
+                      <td>{{finding["severity"]}}</td>
+                      <td>{{finding["cvss"]}}</td>
+                      <td>{{finding["packageName"]}}</td>
+                      <td>{{finding["cve"]}}</td>
+                      <td>{{finding["riskFactors"]}}</td>
+                      <td>{{finding["type"]}}</td>
+                      <td>{{finding["binaryPkgs"]}}</td>
+                      <td>{{finding["layerTime"]}}</td>
+                      <td>{{finding["exploit"]}}</td>
+                      <td>{{finding["description"]}}</td>
+                      <td>{{finding["link"]}}</td>
+                      <td>{{finding["title"]}}</td>
+                      <td>{{finding["applicableRules"]}}</td>
+                      <td>{{finding["packageVersion"]}}</td>
+                      <td>{{finding["discovered"]}}</td>
+                      <td>{{finding["twistlock"]}}</td>
+                      <td>{{finding["cause"]}}</td>
+                      <td>{{finding["templates"]}}</td>
+                      <td>{{finding["vecStr"]}}</td>
+                      <td>{{finding["status"]}}</td>
+                      <td>{{finding["published"]}}</td>
+                      <td>{{finding["text"]}}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr id="third" style="margin-bottom:4rem !important" class="mb-4">
+      <div class="row mt-4 mb-5">
+        <div class="col-lg-12">
+          <div class="card">
+            <div style="overflow:auto" class="card-body">
+              <h4 class="card-title mb-2" style="font-weight:700">Medium<span style="margin-left:10px;color:white;background-color:#f1d620" class="badge badge-pill">{{data["data"]["medium"]|length}}</span></h4>
+              <p>These violations are medium risk but may change. You should address these after critical & high (i.e. blockers)</p>
+
+              <table class="table">
+                <thead class="thead-white">
+                  <tr style="text-transform: capitalize">
+                    <th scope="col">#</th>
+                    <th scope="col">id</th>
+                    <th scope="col">severity</th>
+                    <th scope="col">cvss</th>
+                    <th scope="col">packageName</th>
+                    <th scope="col">cve</th>
+                    <th scope="col">riskFactors</th>
+                    <th scope="col">type</th>
+                    <th scope="col">binaryPkgs</th>
+                    <th scope="col">layerTime</th>
+                    <th scope="col">exploit</th>
+                    <th scope="col">description</th>
+                    <th scope="col">link</th>
+                    <th scope="col">title</th>
+                    <th scope="col">applicableRules</th>
+                    <th scope="col">packageVersion</th>
+                    <th scope="col">discovered</th>
+                    <th scope="col">twistlock</th>
+                    <th scope="col">cause</th>
+                    <th scope="col">templates</th>
+                    <th scope="col">vecStr</th>
+                    <th scope="col">status</th>
+                    <th scope="col">published</th>
+                    <th scope="col">text</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for finding in data["data"]["medium"] %}
+                    <tr>
+                      <th scope="row">{{loop.index}}</th>
+                      <td>{{finding["id"]}}</td>
+                      <td>{{finding["severity"]}}</td>
+                      <td>{{finding["cvss"]}}</td>
+                      <td>{{finding["packageName"]}}</td>
+                      <td>{{finding["cve"]}}</td>
+                      <td>{{finding["riskFactors"]}}</td>
+                      <td>{{finding["type"]}}</td>
+                      <td>{{finding["binaryPkgs"]}}</td>
+                      <td>{{finding["layerTime"]}}</td>
+                      <td>{{finding["exploit"]}}</td>
+                      <td>{{finding["description"]}}</td>
+                      <td>{{finding["link"]}}</td>
+                      <td>{{finding["title"]}}</td>
+                      <td>{{finding["applicableRules"]}}</td>
+                      <td>{{finding["packageVersion"]}}</td>
+                      <td>{{finding["discovered"]}}</td>
+                      <td>{{finding["twistlock"]}}</td>
+                      <td>{{finding["cause"]}}</td>
+                      <td>{{finding["templates"]}}</td>
+                      <td>{{finding["vecStr"]}}</td>
+                      <td>{{finding["status"]}}</td>
+                      <td>{{finding["published"]}}</td>
+                      <td>{{finding["text"]}}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr id="fourth" style="margin-bottom:4rem !important" class="mb-4">
+      <div class="row mt-4 mb-5">
+        <div class="col-lg-12">
+          <div class="card">
+            <div style="overflow:auto" class="card-body">
+              <h4 class="card-title mb-2" style="font-weight:700">Informational<span style="margin-left:10px;color:white;background-color:#007bff" class="badge badge-pill">{{data["data"]["low"]|length}}</span></h4>
+              <p>These violations are low risk or informational. You should consider these low priority.</p>
+              <table class="table">
+                <thead class="thead-white">
+                  <tr style="text-transform: capitalize">
+                    <th scope="col">#</th>
+                    <th scope="col">id</th>
+                    <th scope="col">severity</th>
+                    <th scope="col">cvss</th>
+                    <th scope="col">packageName</th>
+                    <th scope="col">cve</th>
+                    <th scope="col">riskFactors</th>
+                    <th scope="col">type</th>
+                    <th scope="col">binaryPkgs</th>
+                    <th scope="col">layerTime</th>
+                    <th scope="col">exploit</th>
+                    <th scope="col">description</th>
+                    <th scope="col">link</th>
+                    <th scope="col">title</th>
+                    <th scope="col">applicableRules</th>
+                    <th scope="col">packageVersion</th>
+                    <th scope="col">discovered</th>
+                    <th scope="col">twistlock</th>
+                    <th scope="col">cause</th>
+                    <th scope="col">templates</th>
+                    <th scope="col">vecStr</th>
+                    <th scope="col">status</th>
+                    <th scope="col">published</th>
+                    <th scope="col">text</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for finding in data["data"]["low"] %}
+                    <tr>
+                      <th scope="row">{{loop.index}}</th>
+                      <td>{{finding["id"]}}</td>
+                      <td>{{finding["severity"]}}</td>
+                      <td>{{finding["cvss"]}}</td>
+                      <td>{{finding["packageName"]}}</td>
+                      <td>{{finding["cve"]}}</td>
+                      <td>{{finding["riskFactors"]}}</td>
+                      <td>{{finding["type"]}}</td>
+                      <td>{{finding["binaryPkgs"]}}</td>
+                      <td>{{finding["layerTime"]}}</td>
+                      <td>{{finding["exploit"]}}</td>
+                      <td>{{finding["description"]}}</td>
+                      <td>{{finding["link"]}}</td>
+                      <td>{{finding["title"]}}</td>
+                      <td>{{finding["applicableRules"]}}</td>
+                      <td>{{finding["packageVersion"]}}</td>
+                      <td>{{finding["discovered"]}}</td>
+                      <td>{{finding["twistlock"]}}</td>
+                      <td>{{finding["cause"]}}</td>
+                      <td>{{finding["templates"]}}</td>
+                      <td>{{finding["vecStr"]}}</td>
+                      <td>{{finding["status"]}}</td>
+                      <td>{{finding["published"]}}</td>
+                      <td>{{finding["text"]}}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </main><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js" crossorigin="anonymous"></script>
+    <script>
+        feather.replace()
+
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+          } else {
+            mybutton.style.display = "none";
+          }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+    </script>
+  </body>
+</html>
+
