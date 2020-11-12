@@ -41,7 +41,8 @@ pipeline {
             reportDir: 'reports',
             reportFiles: 'standard.html',
             reportName: 'Twistlock Report',
-          ])
+          ]),
+          publishChecks detailsURL: 'https://google.com', name: 'test-check', summary: 'just checking out the feature', text: 'vulns: 18, critical: 10, high: 8', title: 'Test Check'
         }
       }
     }
