@@ -28,24 +28,23 @@ pipeline {
             ignoreImageBuildTime:true
         }
     }
-    stage('Parse') {
+    stage('Generate Report') {
       steps {
         sh '/usr/bin/python3 /home/bmarsh/test.py prisma-cloud-scan-results.json '+pwd()
       }
-    }
-    stage('HTML') {
-      steps {
-        publishHTML([
-          allowMissing: false,
-          alwaysLinkToLastBuild: false,
-          keepAll: false,
-          reportDir: 'reports',
-          reportFiles: 'standard.html',
-          reportName: 'Twistlock Report',
-        ])
+      post {
+        success {
+          publishHTML([
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: false,
+            reportDir: 'reports',
+            reportFiles: 'standard.html',
+            reportName: 'Twistlock Report',
+          ])
+        }
       }
     }
-
   }
 //  post {
 //      always {
