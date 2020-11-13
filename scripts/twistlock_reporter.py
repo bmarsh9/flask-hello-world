@@ -5,6 +5,7 @@ import jinja2
 import os
 import uuid
 import ntpath
+import math
 
 class TwistlockReporter():
     def __init__(self,filename,output,template):
@@ -49,26 +50,60 @@ class TwistlockReporter():
         data["data"] = output
         return self.generate_html(data)
 
+    def humanize_bytes(self,size_bytes):
+       if size_bytes == 0:
+           return "0B"
+       size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+       i = int(math.floor(math.log(size_bytes, 1024)))
+       p = math.pow(1024, i)
+       s = round(size_bytes / p, 2)
+       return s,size_name[i]
+
     def parse_twistlock_image_scan(self):
         with open(self.twistlock_output) as f:
+            total_size = 0
             content = json.loads(f.read())
+            data = {
+                "meta":{},
+                "history":[],
+                "vulnerabilities":{"critical":[],"high":[],"medium":[],"low":[]},
+                "compliance":{"critical":[],"high":[],"medium":[],"low":[]}
+            }
+
             for scan in content:
-                data = {"meta":{},"critical":[],"high":[],"medium":[],"low":[]}
 
                 # collect metadata of the scan
-                for key in ["pass","jobName","entityInfo","build","time","version","_id"]:
+                for key in ["pass","jobName","build","time","version","_id"]:
                     data["meta"][key] = scan[key]
 
+                meta_keys = ["distro","osDistro","labels","vulnerabilityRiskScore","trustStatus","complianceRiskScore","id",
+                    "osDistroVersion","complianceIssuesCount","osDistroRelease","complianceDistribution","riskFactors",
+                    "Secrets","vulnerabilityDistribution"]
+
+                for key in meta_keys:
+                    data["meta"][key] = scan["entityInfo"][key]
+
+                data["meta"]["binary_count"] = len(scan["entityInfo"]["binaries"])
+
+                # get size and history
+                for layer in scan["entityInfo"]["image"]["history"]:
+                    if "sizeBytes" in layer:
+                        total_size += layer["sizeBytes"]
+                        layer_size,layer_abbr = self.humanize_bytes(layer["sizeBytes"])
+                        layer["humanize_size"] = layer_size
+                    data["history"].append(layer)
+
+                size,abbr = self.humanize_bytes(total_size)
+                data["meta"]["total_size"] = size
+                data["meta"]["size_abbr"] = abbr
+
+                # get compliance violations
+                for record in scan["entityInfo"]["complianceIssues"]:
+                    data["compliance"][record["severity"]].append(record)
+
+                # get vulnerability violations
                 for record in scan["entityInfo"]["vulnerabilities"]:
-                    # filter on record key/values here
-                    ''' Example:
-                        print(record["severity"])
-                        print(record["exploit"])
-                        print(record["cvss"])
-                        print(record["description"])
-                    '''
-                    # add record to top-level dictionary
-                    data[record["severity"]].append(record)
+                    data["vulnerabilities"][record["severity"]].append(record)
                 return data
 
 if __name__ == "__main__":
@@ -86,5 +121,5 @@ if __name__ == "__main__":
     script.py --file /path-to/prisma-cloud-scan-results.json --output /path-to/output-folder --template /path-to/template-file
     '''
     report = TwistlockReporter(args.filename,args.output,args.template)
+    #print(json.dumps(report.parse_twistlock_image_scan(),indent=4))
     report.create_twistlock_report()
-

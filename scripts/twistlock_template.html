@@ -96,7 +96,7 @@
                 <h5 class="text-dark text-center"><div style="color:#dc3545" class="icon-stack icon-stack-md bg-green-soft text-green flex-shrink-0 mr-2">
                   <i data-feather="x-octagon"></i></div>Critical</h5>
                 <div class="d-flex align-items-center">
-                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["critical"]|length}}</h1></div>
+                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["vulnerabilities"]["critical"]|length}}</h1></div>
                 </div>
               </div>
             </div>
@@ -108,7 +108,7 @@
                 <h5 class="text-dark text-center"><div style="color:#f99209" class="icon-stack icon-stack-md bg-green-soft text-green flex-shrink-0 mr-2">
                   <i data-feather="alert-triangle"></i></div>High</h5>
                 <div class="d-flex align-items-center">
-                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["high"]|length}}</h1></div>
+                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["vulnerabilities"]["high"]|length}}</h1></div>
                 </div>
               </div>
             </div>
@@ -120,7 +120,7 @@
                 <h5 class="text-dark text-center"><div style="color:#f1d620" class="icon-stack icon-stack-md bg-green-soft text-green flex-shrink-0 mr-2">
                   <i data-feather="alert-circle"></i></div>Medium</h5>
                 <div class="d-flex align-items-center">
-                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["medium"]|length}}</h1></div>
+                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["vulnerabilities"]["medium"]|length}}</h1></div>
                 </div>
               </div>
             </div>
@@ -132,21 +132,59 @@
                 <h5 class="text-dark text-center"><div style="color:#007bff" class="icon-stack icon-stack-md bg-blue-soft text-blue flex-shrink-0 mr-2">
                   <i data-feather="clipboard"></i></div>Informational</h5>
                 <div class="d-flex align-items-center">
-                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["low"]|length}}</h1></div>
+                  <div class="card-body text-center"><h1 id="statistic-counter" class="text-large" style="font-size:2rem;">{{data["data"]["vulnerabilities"]["low"]|length}}</h1></div>
                 </div>
               </div>
             </div>
           </div>
       </div>
 
+      <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
+        Metadata
+      </a>
+      <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
+        Build History
+      </a>
+      <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
+        OS Information
+      </a>
+      <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapse4" role="button" aria-expanded="false" aria-controls="collapse4">
+        Image Size
+      </a>
+      <div class="collapse" id="collapse1">
+        <div style="background-color:#dcdcdc;border-color:#dcdcdc;font-size:14px" class="card card-body">
+          <code><pre id="json"></pre></code>
+        </div>
+      </div>
+      <div class="collapse" id="collapse2">
+        <div style="background-color:#dcdcdc;border-color:#dcdcdc;font-size:14px" class="card card-body">
+          <code><pre id="json_2"></pre></code>
+        </div>
+      </div>
+      <div class="collapse" id="collapse3">
+        <div style="font-size:14px" class="card card-body">
+          <p>Id: {{data["data"]["meta"]["id"]}}</p>
+          <p>Full Distro: {{data["data"]["meta"]["distro"]}}</p>
+          <p>Distro OS: {{data["data"]["meta"]["osDistro"]}}</p>
+          <p>Distro Release: {{data["data"]["meta"]["osDistroRelease"]}}</p>
+          <p>Distro Version: {{data["data"]["meta"]["osDistroVersion"]}}</p>
+        </div>
+      </div>
+      <div class="collapse" id="collapse4">
+        <div style="font-size:14px" class="card card-body">
+          <p>Total Image Size: {{data["data"]["meta"]["total_size"]}}</p>
+          <p>Abbr: {{data["data"]["meta"]["size_abbr"]}}</p>
+          <p>Binary Count: {{data["data"]["meta"]["binary_count"]}}</p>
+        </div>
+      </div>
       <hr id="first" style="margin-bottom:4rem !important" class="mb-4">
       <div class="row mt-4 mb-5">
         <div class="col-lg-12">
           <div class="card">
             <div style="overflow:auto" class="card-body">
-              <h4 class="card-title mb-2" style="font-weight:700">Critical<span style="margin-left:10px;color:white;background-color:#dc3545" class="badge badge-pill">{{data["data"]["critical"]|length}}</span></h4>
+              <h4 class="card-title mb-2" style="font-weight:700">Critical<span style="margin-left:10px;color:white;background-color:#dc3545" class="badge badge-pill">{{data["data"]["vulnerabilities"]["critical"]|length}}</span></h4>
               <p>The violations listed below are considered critical to high risk but may change depending on the deployment. You should address these first.</p>
-
+              
               <table class="table">
                 <thead class="thead-white">
                   <tr style="text-transform: capitalize">
@@ -177,7 +215,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for finding in data["data"]["critical"] %}
+                  {% for finding in data["data"]["vulnerabilities"]["critical"] %}
                     <tr>
                       <th scope="row">{{loop.index}}</th>
                       <td>{{finding["id"]}}</td>
@@ -216,7 +254,7 @@
         <div class="col-lg-12">
           <div class="card">
             <div style="overflow:auto" class="card-body">
-              <h4 class="card-title mb-2" style="font-weight:700">High<span style="margin-left:10px;color:white;background-color:#f99209" class="badge badge-pill">{{data["data"]["high"]|length}}</span></h4>
+              <h4 class="card-title mb-2" style="font-weight:700">High<span style="margin-left:10px;color:white;background-color:#f99209" class="badge badge-pill">{{data["data"]["vulnerabilities"]["high"]|length}}</span></h4>
               <p>The violations listed below are considered high risk but may change depending on the deployment. You should prioritize these after critical.</p>
               <table class="table">
                 <thead class="thead-white">
@@ -248,7 +286,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for finding in data["data"]["high"] %}
+                  {% for finding in data["data"]["vulnerabilities"]["high"] %}
                     <tr>
                       <th scope="row">{{loop.index}}</th>
                       <td>{{finding["id"]}}</td>
@@ -287,9 +325,9 @@
         <div class="col-lg-12">
           <div class="card">
             <div style="overflow:auto" class="card-body">
-              <h4 class="card-title mb-2" style="font-weight:700">Medium<span style="margin-left:10px;color:white;background-color:#f1d620" class="badge badge-pill">{{data["data"]["medium"]|length}}</span></h4>
+              <h4 class="card-title mb-2" style="font-weight:700">Medium<span style="margin-left:10px;color:white;background-color:#f1d620" class="badge badge-pill">{{data["data"]["vulnerabilities"]["medium"]|length}}</span></h4>
               <p>These violations are medium risk but may change. You should address these after critical & high (i.e. blockers)</p>
-
+              
               <table class="table">
                 <thead class="thead-white">
                   <tr style="text-transform: capitalize">
@@ -320,7 +358,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for finding in data["data"]["medium"] %}
+                  {% for finding in data["data"]["vulnerabilities"]["medium"] %}
                     <tr>
                       <th scope="row">{{loop.index}}</th>
                       <td>{{finding["id"]}}</td>
@@ -359,7 +397,7 @@
         <div class="col-lg-12">
           <div class="card">
             <div style="overflow:auto" class="card-body">
-              <h4 class="card-title mb-2" style="font-weight:700">Informational<span style="margin-left:10px;color:white;background-color:#007bff" class="badge badge-pill">{{data["data"]["low"]|length}}</span></h4>
+              <h4 class="card-title mb-2" style="font-weight:700">Informational<span style="margin-left:10px;color:white;background-color:#007bff" class="badge badge-pill">{{data["data"]["vulnerabilities"]["low"]|length}}</span></h4>
               <p>These violations are low risk or informational. You should consider these low priority.</p>
               <table class="table">
                 <thead class="thead-white">
@@ -391,7 +429,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for finding in data["data"]["low"] %}
+                  {% for finding in data["data"]["vulnerabilities"]["low"] %}
                     <tr>
                       <th scope="row">{{loop.index}}</th>
                       <td>{{finding["id"]}}</td>
@@ -458,6 +496,11 @@
           document.documentElement.scrollTop = 0;
         }
 
+        var metadata = {{data["data"]["meta"]|tojson|safe}};
+        document.getElementById("json").innerHTML = JSON.stringify(metadata, undefined, 4);
+
+        var build_history = {{data["data"]["history"]|tojson|safe}};
+        document.getElementById("json_2").innerHTML = JSON.stringify(build_history, undefined, 4);
     </script>
   </body>
 </html>
