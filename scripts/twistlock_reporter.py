@@ -90,7 +90,7 @@ class TwistlockReporter():
                     if "sizeBytes" in layer:
                         total_size += layer["sizeBytes"]
                         layer_size,layer_abbr = self.humanize_bytes(layer["sizeBytes"])
-                        layer["humanize_size"] = layer_size
+                        layer["humanize_size"] = "{} {}".format(layer_size,layer_abbr)
                     data["history"].append(layer)
 
                 size,abbr = self.humanize_bytes(total_size)
