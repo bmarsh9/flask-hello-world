@@ -194,6 +194,7 @@
                     <th scope="col">cvss</th>
                     <th scope="col">packageName</th>
                     <th scope="col">cve</th>
+                    <th scope="col">remediation</th>
                     <th scope="col">riskFactors</th>
                     <th scope="col">type</th>
                     <th scope="col">binaryPkgs</th>
@@ -216,7 +217,7 @@
                 </thead>
                 <tbody>
                   {% for finding in data["data"]["vulnerabilities"]["critical"] %}
-                    <tr>
+                    <tr style="white-space:nowrap">
                       <th scope="row">{{loop.index}}</th>
                       <td><div id="element" class="btn btn-light btn-sm show-modal"><i style="height:15px;width;15px;color:#007bff" data-feather="search"></i></div></td>
                       <td>{{finding["id"]}}</td>
@@ -224,6 +225,7 @@
                       <td>{{finding["cvss"]}}</td>
                       <td>{{finding["packageName"]}}</td>
                       <td>{{finding["cve"]}}</td>
+                      <td>{{finding["remediation"]}}</td>
                       <td>{{finding["riskFactors"]}}</td>
                       <td>{{finding["type"]}}</td>
                       <td>{{finding["binaryPkgs"]}}</td>
@@ -267,6 +269,7 @@
                     <th scope="col">cvss</th>
                     <th scope="col">packageName</th>
                     <th scope="col">cve</th>
+                    <th scope="col">remediation</th>
                     <th scope="col">riskFactors</th>
                     <th scope="col">type</th>
                     <th scope="col">binaryPkgs</th>
@@ -289,7 +292,7 @@
                 </thead>
                 <tbody>
                   {% for finding in data["data"]["vulnerabilities"]["high"] %}
-                    <tr>
+                    <tr style="white-space:nowrap">
                       <th scope="row">{{loop.index}}</th>
                       <td><div id="element" class="btn btn-light btn-sm show-modal"><i style="height:15px;width;15px;color:#007bff" data-feather="search"></i></div></td>
                       <td>{{finding["id"]}}</td>
@@ -297,6 +300,7 @@
                       <td>{{finding["cvss"]}}</td>
                       <td>{{finding["packageName"]}}</td>
                       <td>{{finding["cve"]}}</td>
+                      <td>{{finding["remediation"]}}</td>
                       <td>{{finding["riskFactors"]}}</td>
                       <td>{{finding["type"]}}</td>
                       <td>{{finding["binaryPkgs"]}}</td>
@@ -341,6 +345,7 @@
                     <th scope="col">cvss</th>
                     <th scope="col">packageName</th>
                     <th scope="col">cve</th>
+                    <th scope="col">remediation</th>
                     <th scope="col">riskFactors</th>
                     <th scope="col">type</th>
                     <th scope="col">binaryPkgs</th>
@@ -363,7 +368,7 @@
                 </thead>
                 <tbody>
                   {% for finding in data["data"]["vulnerabilities"]["medium"] %}
-                    <tr>
+                    <tr style="white-space:nowrap">
                       <th scope="row">{{loop.index}}</th>
                       <td><div id="element" class="btn btn-light btn-sm show-modal"><i style="height:15px;width;15px;color:#007bff" data-feather="search"></i></div></td>
                       <td>{{finding["id"]}}</td>
@@ -371,6 +376,7 @@
                       <td>{{finding["cvss"]}}</td>
                       <td>{{finding["packageName"]}}</td>
                       <td>{{finding["cve"]}}</td>
+                      <td>{{finding["remediation"]}}</td>
                       <td>{{finding["riskFactors"]}}</td>
                       <td>{{finding["type"]}}</td>
                       <td>{{finding["binaryPkgs"]}}</td>
@@ -414,6 +420,7 @@
                     <th scope="col">cvss</th>
                     <th scope="col">packageName</th>
                     <th scope="col">cve</th>
+                    <th scope="col">remediation</th>
                     <th scope="col">riskFactors</th>
                     <th scope="col">type</th>
                     <th scope="col">binaryPkgs</th>
@@ -436,7 +443,7 @@
                 </thead>
                 <tbody>
                   {% for finding in data["data"]["vulnerabilities"]["low"] %}
-                    <tr>
+                    <tr style="white-space:nowrap">
                       <th scope="row">{{loop.index}}</th>
                       <td><div id="element" class="btn btn-light btn-sm show-modal"><i style="height:15px;width;15px;color:#007bff" data-feather="search"></i></div></td>
                       <td>{{finding["id"]}}</td>
@@ -444,6 +451,7 @@
                       <td>{{finding["cvss"]}}</td>
                       <td>{{finding["packageName"]}}</td>
                       <td>{{finding["cve"]}}</td>
+                      <td>{{finding["remediation"]}}</td>
                       <td>{{finding["riskFactors"]}}</td>
                       <td>{{finding["type"]}}</td>
                       <td>{{finding["binaryPkgs"]}}</td>
