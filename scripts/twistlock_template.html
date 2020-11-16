@@ -162,7 +162,7 @@
         </div>
       </div>
       <div class="collapse" id="collapse3">
-        <div style="font-size:14px" class="card card-body">
+        <div style="background-color:#dcdcdc;border-color:#dcdcdc;font-size:14px" class="card card-body">
           <p>Id: {{data["data"]["meta"]["id"]}}</p>
           <p>Full Distro: {{data["data"]["meta"]["distro"]}}</p>
           <p>Distro OS: {{data["data"]["meta"]["osDistro"]}}</p>
@@ -171,9 +171,8 @@
         </div>
       </div>
       <div class="collapse" id="collapse4">
-        <div style="font-size:14px" class="card card-body">
-          <p>Total Image Size: {{data["data"]["meta"]["total_size"]}}</p>
-          <p>Abbr: {{data["data"]["meta"]["size_abbr"]}}</p>
+        <div style="background-color:#dcdcdc;border-color:#dcdcdc;font-size:14px" class="card card-body">
+          <p>Total Image Size: {{data["data"]["meta"]["total_size"]}} {{data["data"]["meta"]["size_abbr"]}}</p>
           <p>Binary Count: {{data["data"]["meta"]["binary_count"]}}</p>
         </div>
       </div>
@@ -189,6 +188,7 @@
                 <thead class="thead-white">
                   <tr style="text-transform: capitalize">
                     <th scope="col">#</th>
+                    <th scope="col">view</th>
                     <th scope="col">id</th>
                     <th scope="col">severity</th>
                     <th scope="col">cvss</th>
@@ -218,6 +218,7 @@
                   {% for finding in data["data"]["vulnerabilities"]["critical"] %}
                     <tr>
                       <th scope="row">{{loop.index}}</th>
+                      <td><div id="element" class="btn btn-light btn-sm show-modal"><i style="height:15px;width;15px;color:#007bff" data-feather="search"></i></div></td>
                       <td>{{finding["id"]}}</td>
                       <td>{{finding["severity"]}}</td>
                       <td>{{finding["cvss"]}}</td>
@@ -260,6 +261,7 @@
                 <thead class="thead-white">
                   <tr style="text-transform: capitalize">
                     <th scope="col">#</th>
+                    <th scope="col">view</th>
                     <th scope="col">id</th>
                     <th scope="col">severity</th>
                     <th scope="col">cvss</th>
@@ -289,6 +291,7 @@
                   {% for finding in data["data"]["vulnerabilities"]["high"] %}
                     <tr>
                       <th scope="row">{{loop.index}}</th>
+                      <td><div id="element" class="btn btn-light btn-sm show-modal"><i style="height:15px;width;15px;color:#007bff" data-feather="search"></i></div></td>
                       <td>{{finding["id"]}}</td>
                       <td>{{finding["severity"]}}</td>
                       <td>{{finding["cvss"]}}</td>
@@ -332,6 +335,7 @@
                 <thead class="thead-white">
                   <tr style="text-transform: capitalize">
                     <th scope="col">#</th>
+                    <th scope="col">view</th>
                     <th scope="col">id</th>
                     <th scope="col">severity</th>
                     <th scope="col">cvss</th>
@@ -361,6 +365,7 @@
                   {% for finding in data["data"]["vulnerabilities"]["medium"] %}
                     <tr>
                       <th scope="row">{{loop.index}}</th>
+                      <td><div id="element" class="btn btn-light btn-sm show-modal"><i style="height:15px;width;15px;color:#007bff" data-feather="search"></i></div></td>
                       <td>{{finding["id"]}}</td>
                       <td>{{finding["severity"]}}</td>
                       <td>{{finding["cvss"]}}</td>
@@ -403,6 +408,7 @@
                 <thead class="thead-white">
                   <tr style="text-transform: capitalize">
                     <th scope="col">#</th>
+                    <th scope="col">view</th>
                     <th scope="col">id</th>
                     <th scope="col">severity</th>
                     <th scope="col">cvss</th>
@@ -432,6 +438,7 @@
                   {% for finding in data["data"]["vulnerabilities"]["low"] %}
                     <tr>
                       <th scope="row">{{loop.index}}</th>
+                      <td><div id="element" class="btn btn-light btn-sm show-modal"><i style="height:15px;width;15px;color:#007bff" data-feather="search"></i></div></td>
                       <td>{{finding["id"]}}</td>
                       <td>{{finding["severity"]}}</td>
                       <td>{{finding["cvss"]}}</td>
@@ -463,8 +470,22 @@
           </div>
         </div>
       </div>
-
-
+      <div id="datamodal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Violation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div id="modal_data" class="modal-body" style="font-size:14px">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Request Help</button>
+                </div>
+            </div>
+        </div>
+      </div>
     </main><!-- /.container -->
 
     <!-- Bootstrap core JavaScript
@@ -476,10 +497,8 @@
     <script>
         feather.replace()
 
-        //Get the button
         var mybutton = document.getElementById("myBtn");
 
-        // When the user scrolls down 20px from the top of the document, show the button
         window.onscroll = function() {scrollFunction()};
 
         function scrollFunction() {
@@ -490,7 +509,6 @@
           }
         }
 
-        // When the user clicks on the button, scroll to the top of the document
         function topFunction() {
           document.body.scrollTop = 0;
           document.documentElement.scrollTop = 0;
@@ -501,6 +519,28 @@
 
         var build_history = {{data["data"]["history"]|tojson|safe}};
         document.getElementById("json_2").innerHTML = JSON.stringify(build_history, undefined, 4);
+
+        $(document).ready(function(){
+          var show_btn=$('.show-modal');
+  
+          show_btn.click(function(){
+              $("#datamodal").modal('show');
+              $("#modal_data").empty();
+              var $headers = $(this).closest('table').find('th');
+
+              $(this).closest("tr").each(function() {
+                var i = 0;
+                $(this).find('td').each (function() {
+                  i++;
+                  var header = $headers[i].innerText
+                  var value = $(this).text()
+                  if (value) {
+                    $("#modal_data").append("<p><b>"+header+"</b>: "+value+"</p>")
+                  };
+                }); 
+              })
+          })
+        });
     </script>
   </body>
 </html>
