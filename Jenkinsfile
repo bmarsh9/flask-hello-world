@@ -13,7 +13,7 @@ pipeline {
     }
     stage("Twistlock") {
       steps {
-        TwistlockScan(imageName:"${group}_${service}",verbose:true)
+        TwistlockScan(imageName:"${group}_${service}")
       }
     }
   }
