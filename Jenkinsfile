@@ -13,7 +13,7 @@ pipeline {
     }
     stage("Twistlock") {
       steps {
-        def scanResult = TwistlockScan(imageName:"${group}_${service}")
+        TwistlockScan(imageName:"${group}_${service}")
         GithubComment(comment:"test")
       }
     }
